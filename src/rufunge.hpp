@@ -14,4 +14,14 @@ class VM
 public:
 	std::vector<Thread*> threads;
 	std::map<int, Subroutine*> subroutines;
+
+	int numAliveThreads()
+	{
+		return threads.size();
+	}
+
+	void init(Canvas *canvas)
+	{
+		
+	}
 };

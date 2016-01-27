@@ -34,6 +34,7 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 set(PROJECT_SRC
 	src/main.cpp
+	src/canvas.cpp
 )
 
 # Define sources and executable

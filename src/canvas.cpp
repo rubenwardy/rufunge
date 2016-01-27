@@ -1,4 +1,9 @@
 #include "canvas.hpp"
+#include <iostream>
+#include <assert.h>
+#include <cmath>
+#include <string>
+#include <fstream>
 
 Chunk *Canvas::getChunk(int x, int y)
 {
@@ -31,6 +36,8 @@ Chunk *Canvas::getChunkOrCreate(int x, int y)
 		tmp->x = cx;
 		tmp->y = cy;
 		tmp->next = hashmap[hash];
+		for (int i = 0; i < CHUNK_SIZE * CHUNK_SIZE; i++)
+			tmp->data[i] = ' ';
 		hashmap[hash] = tmp;
 		return tmp;
 	}
@@ -56,6 +63,35 @@ char Canvas::get(int x, int y) {
 		return  c->data[rx + ry * CHUNK_SIZE]; //retval;
 	} else {
 		//printf("get %d %d -> 0\n", x, y);
-		return 0;
+		return ' ';
 	}
+}
+
+bool Canvas::readFromFile(const char *filepath)
+{
+	std::ifstream infile(filepath);
+	std::string line;
+	int y = 0;
+	while (std::getline(infile, line)) {
+		int x = 0;
+		for (int i = 0; i < line.size(); i++) {
+			char ch = line[i];
+			if (ch == '\n')
+				break;
+
+			if (ch == '\t') {
+				std::cerr << "WARNING: Tab character found. Assuming 4 spaces." << std::endl;
+				x += 3;
+				continue;
+			}
+
+			set(x, y, ch);
+
+			x++;
+		}
+		std::cerr << "Line " << y << " had " << x << " characters." << std::endl;
+		y++;
+	}
+
+	return true;
 }

@@ -1,7 +1,9 @@
+#include <iostream>
+#include <assert.h>
 #include "rufunge.hpp"
 
 #define TEST(cond) if (!(cond)) { std::cerr << "Failed test, line " << __LINE__ << ": " << #cond << std::endl; return false; }
-bool TEST_POS(Canvas &c, int x, int y, char b, char a)
+inline bool TEST_POS_SET(Canvas &c, int x, int y, char b, char a)
 {
 	TEST(c.get((x), (y)) == (b));
 	c.set((x), (y), (a));
@@ -9,11 +11,15 @@ bool TEST_POS(Canvas &c, int x, int y, char b, char a)
 
 	return true;
 }
-bool run_tests() {
+
+#define TEST_POS(ca, x, y, ch) TEST((ca).get((x), (y)) == (ch))
+
+bool run_tests()
+{
 	Canvas c;
 	for (int x = -100; x < 100; x++) {
 		for (int y = -100; y < 100; y++) {
-			if (!TEST_POS(c, x, y, 0, (x + y * 200) % 255)) {
+			if (!TEST_POS_SET(c, x, y, ' ', (x + y * 200) % 255)) {
 				std::cerr << " - was " << x << ", " << y << std::endl;
 				return false;
 			}
@@ -30,16 +36,41 @@ bool run_tests() {
 	TEST(dirLeft(DOWN)   == RIGHT);
 	TEST(dirLeft(LEFT)   == DOWN);
 
+	Canvas d;
+	TEST(d.readFromFile("examples/hello_world.rf"));
+
+	std::string line = ">              v";
+	int y = 0;
+	for (int x = 0; x < line.size(); x++)
+		TEST_POS(d, x, y, line[x]);
+
+	line = "v  ,,,,,\"Hello\"<"; y++;
+	for (int x = 0; x < line.size(); x++)
+		TEST_POS(d, x, y, line[x]);
+
+	line = ">48*,          v"; y++;
+	for (int x = 0; x < line.size(); x++)
+		TEST_POS(d, x, y, line[x]);
+
+	line = "v,,,,,,\"World!\"<"; y++;
+	for (int x = 0; x < line.size(); x++)
+		TEST_POS(d, x, y, line[x]);
+
+	line = ">25*,@            "; y++;
+	for (int x = 0; x < line.size(); x++)
+		TEST_POS(d, x, y, line[x]);
+
 	return true;
 }
 
-int main() {
-	if (run_tests()) {
-		std::cerr << "All tests passed!" << std::endl;
-	} else {
+int main()
+{
+	if (!run_tests()) {
 		std::cerr << "A test failed!" << std::endl;
 		return 1;
 	}
 
-	std::cerr << "Loaded!" << std::endl;
+	std::cerr << "All tests passed!" << std::endl;
+
+	return 0;
 }

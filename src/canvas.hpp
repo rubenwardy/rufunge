@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <assert.h>
-#include <cmath>
 #include <stack>
 #include <map>
 #include <vector>
@@ -37,4 +34,7 @@ public:
 	Chunk *getChunkOrCreate(int x, int y);
 	void set(int x, int y, char value);
 	char get(int x, int y);
+
+
+	bool readFromFile(const char *filepath);
 };

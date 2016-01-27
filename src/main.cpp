@@ -1,11 +1,11 @@
-#include "cursor.hpp"
+#include "rufunge.hpp"
 
 #define TEST(cond) if (!(cond)) { std::cerr << "Failed test, line " << __LINE__ << ": " << #cond << std::endl; return false; }
 bool TEST_POS(Canvas &c, int x, int y, char b, char a)
 {
 	TEST(c.get((x), (y)) == (b));
 	c.set((x), (y), (a));
-	TEST(c.get((x),(y)) == (a));
+	TEST(c.get((x),(y))  == (a));
 
 	return true;
 }
@@ -19,6 +19,16 @@ bool run_tests() {
 			}
 		}
 	}
+
+	TEST(dirRight(RIGHT) == DOWN);
+	TEST(dirRight(DOWN)  == LEFT);
+	TEST(dirRight(LEFT)  == UP);
+	TEST(dirRight(UP)    == RIGHT);
+
+	TEST(dirLeft(RIGHT)  == UP);
+	TEST(dirLeft(UP)     == LEFT);
+	TEST(dirLeft(DOWN)   == RIGHT);
+	TEST(dirLeft(LEFT)   == DOWN);
 
 	return true;
 }

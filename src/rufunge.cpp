@@ -162,6 +162,21 @@ public:
 	}
 };
 
+class ModSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		char b = th->pop();
+		int ret = b % a;
+		if (ret < 0)
+			ret = a - ret;
+		th->push(ret);
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -207,6 +222,7 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['@'] = 9;
 	c->operators['_'] = 10;
 	c->operators[':'] = 11;
+	c->operators['%'] = 12;
 }
 
 void VM::init(Canvas *canvas)
@@ -230,6 +246,7 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new EndSR);
 	loadSubroutine(new HIfSR);
 	loadSubroutine(new DupSR);
+	loadSubroutine(new ModSR);
 	assignStandardSR(th);
 }
 

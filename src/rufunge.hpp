@@ -1,27 +1,19 @@
 #pragma once
 #include "cursor.hpp"
 
-class VM;
-class Subroutine
-{
-public:
-	/// Return true to
-	virtual bool init(VM *vm, Thread *th) = 0;
-};
-
 class VM
 {
+	int sr_count = 0;
 public:
 	std::vector<Thread*> threads;
 	std::map<int, Subroutine*> subroutines;
 
-	int numAliveThreads()
-	{
-		return threads.size();
-	}
+	int numAliveThreads();
+	int loadSubroutine(Subroutine *sr);
 
-	void init(Canvas *canvas)
-	{
-		
-	}
+	void assignStandardSR(Thread *th);
+
+	void init(Canvas *canvas);
+
+	void step();
 };

@@ -72,5 +72,15 @@ int main()
 
 	std::cerr << "All tests passed!" << std::endl;
 
+
+	Canvas d;
+	TEST(d.readFromFile("examples/hello_world.rf"));
+
+	VM vm;
+	vm.init(&d);
+
+	while (vm.numAliveThreads() > 0)
+		vm.step();
+
 	return 0;
 }

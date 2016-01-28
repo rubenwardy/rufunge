@@ -63,7 +63,7 @@ bool run_tests()
 	return true;
 }
 
-int main()
+int main(int n, char **args)
 {
 	if (!run_tests()) {
 		std::cerr << "A test failed!" << std::endl;
@@ -72,9 +72,17 @@ int main()
 
 	std::cerr << "All tests passed!" << std::endl;
 
+	if (n < 2) {
+		std::cerr << "USAGE: a path/to/rufunge/file.rf" << std::endl;
+		return 1;
+	}
+
+	std::cerr << "Running " << args[1] << std::endl;
+	const char *filepath = args[1];
 
 	Canvas d;
-	TEST(d.readFromFile("examples/hello_world2.rf"));
+	if (!d.readFromFile(filepath))
+		return 1;
 
 	VM vm;
 	vm.init(&d);

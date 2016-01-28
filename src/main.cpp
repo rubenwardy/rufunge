@@ -74,7 +74,7 @@ int main()
 
 
 	Canvas d;
-	TEST(d.readFromFile("examples/hello_world.rf"));
+	TEST(d.readFromFile("examples/hello_world2.rf"));
 
 	VM vm;
 	vm.init(&d);

@@ -134,6 +134,34 @@ public:
 	}
 };
 
+class HIfSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		std::cerr << "If " << (int)a << std::endl;
+		if (a == 0)
+			th->setDir(RIGHT);
+		else
+			th->setDir(LEFT);
+		th->move();
+	}
+};
+
+class DupSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		std::cerr << "Duplicate " << (int)a << std::endl;
+		th->push(a);
+		th->push(a);
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -177,6 +205,8 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['*'] = 7;
 	c->operators['/'] = 8;
 	c->operators['@'] = 9;
+	c->operators['_'] = 10;
+	c->operators[':'] = 11;
 }
 
 void VM::init(Canvas *canvas)
@@ -198,6 +228,8 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new MultSR);
 	loadSubroutine(new DivSR);
 	loadSubroutine(new EndSR);
+	loadSubroutine(new HIfSR);
+	loadSubroutine(new DupSR);
 	assignStandardSR(th);
 }
 

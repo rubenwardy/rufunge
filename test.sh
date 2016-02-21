@@ -2,9 +2,9 @@
 
 rm -rf /tmp/rufunge
 mkdir /tmp/rufunge
-mkdir /tmp/rufunge/examples
+mkdir /tmp/rufunge/tests
 
-for name in examples/*.rf; do
+for name in tests/*.rf; do
 	./bin/a $name > /tmp/rufunge/$name.txt
 
 	echo Result for $name:
@@ -13,7 +13,9 @@ for name in examples/*.rf; do
 	if cmp --silent $name.txt /tmp/rufunge/$name.txt; then
 		echo "Test passed: $name"
 	else
-		echo "Test failed: $name"
+		/bin/echo -e "\e[1;31mTest failed: $name\e[0m"
 		exit -1
 	fi
 done
+
+/bin/echo -e "\e[1;32mAll Tests Passed\e[0m"

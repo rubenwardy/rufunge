@@ -149,6 +149,21 @@ public:
 	}
 };
 
+class VIfSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		std::cerr << "V-If " << (int)a << std::endl;
+		if (a == 0)
+			th->setDir(DOWN);
+		else
+			th->setDir(UP);
+		th->move();
+	}
+};
+
 class DupSR : public Subroutine
 {
 public:
@@ -221,8 +236,9 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['/'] = 8;
 	c->operators['@'] = 9;
 	c->operators['_'] = 10;
-	c->operators[':'] = 11;
-	c->operators['%'] = 12;
+	c->operators['|'] = 11;
+	c->operators[':'] = 12;
+	c->operators['%'] = 13;
 }
 
 void VM::init(Canvas *canvas)
@@ -245,6 +261,7 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new DivSR);
 	loadSubroutine(new EndSR);
 	loadSubroutine(new HIfSR);
+	loadSubroutine(new VIfSR);
 	loadSubroutine(new DupSR);
 	loadSubroutine(new ModSR);
 	assignStandardSR(th);

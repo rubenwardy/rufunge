@@ -1,12 +1,21 @@
 # Rufunge
 
-Rufunge is a befunge clone which aims to make the language more practical.]
+Rufunge is a befunge clone which aims to make the language more practical,
+because that is obviously what befunge needs.
 
 ## Aims
 
 * Should be a "superset" of befunge: a befunge program should work in rufunge.
 * Adds good support for subprogram libraries.
 * Adds file access.
+
+## Progress
+
+* befunge
+    * Supports almost all befunge functionality.
+    * Missing: input, jump blocks, jump single, wrapping canvases
+* rufunge superset
+    * Foundations are in place, but no mechanism to load subprograms yet
 
 # 1. The Stack
 
@@ -26,7 +35,7 @@ For example, \`123\` would give you a stack `[123]`.
 
 Use " to enable string mode.  
 For example, "hello" ends up with
-`['o', 'l', 'l', 'e', 'h'] = [111, 108, 108, 101, 104]`.
+`['o', 'l', 'l', 'e', 'h'] = [111, 108, 108, 101, 104]`. (left most is top most)
 
 # 2 Standard Operators and Library
 

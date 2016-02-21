@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 #include <assert.h>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 class DirSR : public Subroutine
 {
@@ -220,6 +222,17 @@ public:
 	}
 };
 
+class RandSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		EDIR dir = (EDIR)(rand() % 4);
+		th->setDir(dir);
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -269,12 +282,15 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['%'] = 13;
 	c->operators['!'] = 14;
 	c->operators['`'] = 15;
+	c->operators['?'] = 16;
 
 	// TODO: ? # [ ] \ $ & ~ g p M P R L
 }
 
 void VM::init(Canvas *canvas)
 {
+	srand (time(NULL));
+
 	assert(threads.size() == 0);
 	assert(subroutines.size() == 0);
 
@@ -298,6 +314,7 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new ModSR);
 	loadSubroutine(new NotSR);
 	loadSubroutine(new GtSR);
+	loadSubroutine(new RandSR);
 	assignStandardSR(th);
 }
 

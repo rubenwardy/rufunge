@@ -257,6 +257,35 @@ public:
 	}
 };
 
+class GetSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char y = th->pop();
+		char x = th->pop();
+		Canvas *c = th->cursor->canvas;
+		th->push(c->get(x, y));
+
+		th->move();
+	}
+};
+
+class PutSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char y = th->pop();
+		char x = th->pop();
+		char v = th->pop();
+		Canvas *c = th->cursor->canvas;
+		c->set(x, y, v);
+
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -309,8 +338,10 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['?'] = 16;
 	c->operators['$'] = 17;
 	c->operators['\\'] = 18;
+	c->operators['g'] = 19;
+	c->operators['p'] = 20;
 
-	// TODO: # [ ] & ~ g p M P R L
+	// TODO: # [ ] & ~ M P R L
 }
 
 void VM::init(Canvas *canvas)
@@ -343,6 +374,8 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new RandSR);
 	loadSubroutine(new DiscardSR);
 	loadSubroutine(new SwapSR);
+	loadSubroutine(new GetSR);
+	loadSubroutine(new PutSR);
 	assignStandardSR(th);
 }
 

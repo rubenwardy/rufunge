@@ -1,0 +1,10 @@
+> 1 1 g "a" - v    Check equals to "a"
+ a  @ ,*25.1  _ v
+v      .0       <
+
+> "z" 1 1 p  v     Set to "z"
+v            <
+
+> 1 1 g "z" - v    Check equals to "z"
+ a  @ ,*25.1  _ v
+@   ,*25  .0    <

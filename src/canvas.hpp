@@ -2,6 +2,7 @@
 #include <stack>
 #include <map>
 #include <vector>
+#include <cstddef>
 
 #define CHUNK_SIZE 16
 

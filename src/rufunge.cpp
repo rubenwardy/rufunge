@@ -192,6 +192,34 @@ public:
 	}
 };
 
+class NotSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		std::cerr << "Not " << (int)a << std::endl;
+		th->push((a == 0) ? 1 : 0);
+		th->move();
+	}
+};
+
+class GtSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		char a = th->pop();
+		char b = th->pop();
+		if (b > a)
+			th->push(1);
+		else
+			th->push(0);
+
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -239,6 +267,10 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['|'] = 11;
 	c->operators[':'] = 12;
 	c->operators['%'] = 13;
+	c->operators['!'] = 14;
+	c->operators['`'] = 15;
+
+	// TODO: ? # [ ] \ $ & ~ g p M P R L
 }
 
 void VM::init(Canvas *canvas)
@@ -264,6 +296,8 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new VIfSR);
 	loadSubroutine(new DupSR);
 	loadSubroutine(new ModSR);
+	loadSubroutine(new NotSR);
+	loadSubroutine(new GtSR);
 	assignStandardSR(th);
 }
 

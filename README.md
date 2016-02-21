@@ -83,7 +83,7 @@ For example, "hello" ends up with
 |   .    | oint | Output a as int               |
 |   ,    | ochr | Output a as char              |
 |   &    | iint | Input  a as int               |
-|   ~    | ichr | Input  a as chat              |
+|   ~    | ichr | Input  a as char              |
 |   g    | get  | a=y, b=x, get (x, y)          |
 |   p    | put  | a=y, b=x, c=v. set (x, y) = v |
 

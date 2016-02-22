@@ -36,7 +36,7 @@ because that is obviously what befunge needs.
 
 ## Compilation
 
-```Bash
+```Shell
 sudo apt-get install build-essential cmake
 cmake .
 make -j3
@@ -44,7 +44,7 @@ make -j3
 
 ## Run
 
-```Bash
+```Shell
 ./bin/a path/to/rufunge.rf
 ```
 
@@ -52,6 +52,6 @@ eg `./bin/a tests/hello_world.rf`
 
 ## Unit Tests
 
-```Bash
+```Shell
 ./test.sh
 ```

@@ -31,3 +31,27 @@ because that is obviously what befunge needs.
         * file system
         * networking
         * graphics
+
+# Usage
+
+## Compilation
+
+```Bash
+sudo apt-get install build-essential cmake
+cmake .
+make -j3
+```
+
+## Run
+
+```Bash
+./bin/a path/to/rufunge.rf
+```
+
+eg `./bin/a tests/hello_world.rf`
+
+## Unit Tests
+
+```Bash
+./test.sh
+```

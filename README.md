@@ -48,7 +48,7 @@ make -j3
 ./bin/a path/to/rufunge.rf
 ```
 
-eg `./bin/a tests/hello_world.rf`
+eg `./bin/a examples/hello_world.rf`
 
 ## Unit Tests
 

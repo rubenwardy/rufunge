@@ -2,9 +2,9 @@
 
 rm -rf /tmp/rufunge
 mkdir /tmp/rufunge
-mkdir /tmp/rufunge/tests
+mkdir /tmp/rufunge/examples
 
-for name in tests/*.rf; do
+for name in examples/*.rf; do
 	./bin/a $name > /tmp/rufunge/$name.txt
 
 	echo Result for $name:

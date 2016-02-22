@@ -37,7 +37,7 @@ bool run_tests()
 	TEST(dirLeft(LEFT)   == DOWN);
 
 	Canvas d;
-	TEST(d.readFromFile("tests/hello_world.rf"));
+	TEST(d.readFromFile("examples/hello_world.rf"));
 
 	std::string line = ">              v";
 	int y = 0;

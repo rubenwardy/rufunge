@@ -8,7 +8,7 @@
 class DirSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char ch = th->getChar();
 		switch (ch) {
@@ -36,7 +36,7 @@ public:
 class NumSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char ch = th->getChar();
 		int num = ch - '0';
@@ -55,7 +55,7 @@ public:
 class PrintCharSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char ch = th->pop();
 		std::cout << ch;
@@ -66,7 +66,7 @@ public:
 class PrintNumSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char ch = th->pop();
 		std::cout << (int)ch;
@@ -77,7 +77,7 @@ public:
 class AddSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -90,7 +90,7 @@ public:
 class TakeSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -103,7 +103,7 @@ public:
 class MultSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -116,7 +116,7 @@ public:
 class DivSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -129,7 +129,7 @@ public:
 class EndSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		th->state = ETS_DEAD;
 		std::cerr << std::endl << "*** Program Exited ***" << std::endl;
@@ -139,7 +139,7 @@ public:
 class HIfSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		std::cerr << "If " << (int)a << std::endl;
@@ -154,7 +154,7 @@ public:
 class VIfSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		std::cerr << "V-If " << (int)a << std::endl;
@@ -169,7 +169,7 @@ public:
 class DupSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		std::cerr << "Duplicate " << (int)a << std::endl;
@@ -182,7 +182,7 @@ public:
 class ModSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -197,7 +197,7 @@ public:
 class NotSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		std::cerr << "Not " << (int)a << std::endl;
@@ -209,7 +209,7 @@ public:
 class GtSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -225,7 +225,7 @@ public:
 class RandSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		EDIR dir = (EDIR)(rand() % 4);
 		th->setDir(dir);
@@ -236,7 +236,7 @@ public:
 class DiscardSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		th->pop();
 		th->move();
@@ -246,7 +246,7 @@ public:
 class SwapSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char a = th->pop();
 		char b = th->pop();
@@ -260,7 +260,7 @@ public:
 class GetSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char y = th->pop();
 		char x = th->pop();
@@ -274,7 +274,7 @@ public:
 class PutSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		char y = th->pop();
 		char x = th->pop();
@@ -289,7 +289,7 @@ public:
 class JumpSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		th->move();
 		th->move();
@@ -299,7 +299,7 @@ public:
 class BridgeSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		do {
 			th->move();
@@ -309,10 +309,83 @@ public:
 	}
 };
 
+class RtnSR : public Subroutine
+{
+public:
+	virtual void run(VM *vm, Thread *th)
+	{
+		th->popCursor();
+	}
+};
+
+class StartRufungeSR : public Subroutine
+{
+public:
+	std::string module;
+	std::string file;
+	virtual void run(VM *vm, Thread *th)
+	{
+		Canvas *d = new Canvas();
+		std::string filepath = std::string("examples/") + file + ".rf";
+		if (d->readFromFile(filepath.c_str())) {
+			std::cerr << "Loaded " << filepath << std::endl;
+		} else {
+			std::cerr << "Error! Unable to load SR "
+				<< module << "::" << file << std::endl;
+			th->state = ETS_DEAD;
+			return;
+		}
+
+		th->move();
+
+		Cursor *cursor = new Cursor();
+		cursor->canvas = d;
+		th->pushCursor(cursor);
+		vm->assignStandardSR(th);
+	}
+};
+
+class LoadSR : public Subroutine
+{
+public:
+	virtual void run(VM *vm, Thread *th)
+	{
+		// Get operator
+		char op = th->pop();
+
+		// Get module
+		std::string module;
+		char c = th->pop();
+		while (c != 0) {
+			module += c;
+			c = th->pop();
+		}
+
+		// Get file
+		std::string file;
+		c = th->pop();
+		while (c != 0) {
+			file += c;
+			c = th->pop();
+		}
+
+		// Load as operator
+		StartRufungeSR *sr = new StartRufungeSR;
+		sr->module = module;
+		sr->file = file;
+		th->cursor->operators[op] = vm->loadSubroutine(sr);
+		std::cerr << "Loaded rufunge operator " << op << " to be "
+			<< module << "::" << file << std::endl;
+
+		th->move();
+	}
+};
+
+
 class TemplateSR : public Subroutine
 {
 public:
-	virtual void run(Thread *th)
+	virtual void run(VM *vm, Thread *th)
 	{
 		th->move();
 	}
@@ -365,8 +438,10 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['p'] = 20;
 	c->operators['#'] = 21;
 	c->operators['['] = 22;
+	c->operators['R'] = 23;
+	c->operators['P'] = 24;
 
-	// TODO: & ~ M P R L
+	// TODO: & ~ M L
 }
 
 void VM::init(Canvas *canvas)
@@ -403,12 +478,14 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new PutSR);
 	loadSubroutine(new JumpSR);
 	loadSubroutine(new BridgeSR);
+	loadSubroutine(new RtnSR);
+	loadSubroutine(new LoadSR);
 	assignStandardSR(th);
 }
 
 void VM::step()
 {
 	for (Thread *th : threads) {
-		th->step(subroutines);
+		th->step(this, subroutines);
 	}
 }

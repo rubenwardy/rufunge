@@ -1,6 +1,7 @@
 #pragma once
 
 class Thread;
+class VM;
 class Subroutine
 {
 public:
@@ -10,5 +11,5 @@ public:
 
 	/// Either performs the calculation and adds it to the stack, or pops a new cursor onto
 	/// The stack
-	virtual void run(Thread *th) = 0;
+	virtual void run(VM* vm, Thread *th) = 0;
 };

@@ -1,4 +1,48 @@
-#include "cursor.hpp"
+#include "thread.hpp"
+
+Thread::Thread(Canvas *c)
+{
+	std::cerr << "Created new thread!" << std::endl;
+	cursor = new Cursor();
+	cursor->canvas = c;
+}
+
+bool Thread::popCursor() {
+	delete cursor;
+	cursor = NULL;
+
+	if (link.empty()) {
+		std::cerr << "Popped cursor, end-of-LS" << std::endl;
+		state = ETS_DEAD;
+		return false;
+	} else {
+		cursor = link.top();
+		link.pop();
+		std::cerr << "Popped cursor, " << link.size()
+			<< " remaining in LS" << std::endl;
+		return true;
+	}
+}
+
+void Thread::pushCursor(Cursor *nc) {
+	if (cursor) {
+		link.push(cursor);
+	}
+	cursor = nc;
+	state = ETS_READY;
+	std::cerr << "Pushed cursor!" << std::endl;
+}
+
+char Thread::pop() {
+	if (stack.empty()) {
+		return 0;
+	} else {
+		char retval = 0;
+		retval = stack.top();
+		stack.pop();
+		return retval;
+	}
+}
 
 void Thread::step(VM *vm, std::map<int, Subroutine*> &srman)
 {

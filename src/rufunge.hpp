@@ -1,5 +1,5 @@
 #pragma once
-#include "cursor.hpp"
+#include "thread.hpp"
 
 class VM
 {

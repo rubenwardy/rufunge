@@ -328,6 +328,14 @@ public:
 	Canvas *canvas = new Canvas();
 	std::string module;
 	std::string file;
+
+	~StartRufungeSR()
+	{
+		std::cerr << "Deconstructing StartRufungeSR" << std::endl;
+		delete canvas;
+		canvas = NULL;
+	}
+
 	virtual void run(VM *vm, Thread *th)
 	{
 		std::string filepath = std::string("examples/") + file + ".rf";
@@ -400,6 +408,20 @@ public:
 		th->move();
 	}
 };
+
+VM::~VM()
+{
+	std::cerr << "Deconstructing VM..." << std::endl;
+	for (Thread *th : threads) {
+		delete th;
+	}
+	threads.clear();
+
+	for (auto pair : subroutines) {
+		delete pair.second;
+	}
+	subroutines.clear();
+}
 
 int VM::numAliveThreads()
 {

@@ -7,6 +7,22 @@ Thread::Thread(Canvas *c)
 	cursor->canvas = c;
 }
 
+Thread::~Thread()
+{
+	std::cerr << "Deconstructing thread!" << std::endl;
+
+	state = ETS_DEAD;
+	if (cursor) {
+		delete cursor;
+	}
+
+	while (!link.empty()) {
+		Cursor *c = link.top();
+		delete c;
+		link.pop();
+	}
+}
+
 bool Thread::popCursor() {
 	delete cursor;
 	cursor = NULL;

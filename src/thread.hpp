@@ -22,6 +22,7 @@ public:
 	ETHREAD_STATE state = ETS_READY;
 
 	Thread(Canvas *c);
+	~Thread();
 
 	inline void setDir(EDIR dir)
 	{

@@ -265,7 +265,10 @@ public:
 		char y = th->pop();
 		char x = th->pop();
 		Canvas *c = th->cursor->canvas;
-		th->push(c->get(x, y));
+		char v = c->get(x, y);
+		th->push(v);
+
+		std::cerr << "Got " << v << " from " << (int)x << ", " << (int)y << std::endl;
 
 		th->move();
 	}
@@ -281,6 +284,7 @@ public:
 		char v = th->pop();
 		Canvas *c = th->cursor->canvas;
 		c->set(x, y, v);
+		std::cerr << "Put " << v << " to " << (int)x << ", " << (int)y << std::endl;
 
 		th->move();
 	}
@@ -321,25 +325,18 @@ public:
 class StartRufungeSR : public Subroutine
 {
 public:
+	Canvas *canvas = new Canvas();
 	std::string module;
 	std::string file;
 	virtual void run(VM *vm, Thread *th)
 	{
-		Canvas *d = new Canvas();
 		std::string filepath = std::string("examples/") + file + ".rf";
-		if (d->readFromFile(filepath.c_str())) {
-			std::cerr << "Loaded " << filepath << std::endl;
-		} else {
-			std::cerr << "Error! Unable to load SR "
-				<< module << "::" << file << std::endl;
-			th->state = ETS_DEAD;
-			return;
-		}
+		std::cerr << "Entering " << filepath << std::endl;
 
 		th->move();
 
 		Cursor *cursor = new Cursor();
-		cursor->canvas = d;
+		cursor->canvas = canvas;
 		th->pushCursor(cursor);
 		vm->assignStandardSR(th);
 	}
@@ -369,10 +366,23 @@ public:
 			c = th->pop();
 		}
 
+		// Load canvas
+		Canvas *d = new Canvas();
+		std::string filepath = std::string("examples/") + file + ".rf";
+		if (d->readFromFile(filepath.c_str())) {
+			std::cerr << "Loaded " << filepath << std::endl;
+		} else {
+			std::cerr << "Error! Unable to load SR "
+				<< module << "::" << file << std::endl;
+			th->state = ETS_DEAD;
+			return;
+		}
+
 		// Load as operator
 		StartRufungeSR *sr = new StartRufungeSR;
 		sr->module = module;
 		sr->file = file;
+		sr->canvas = d;
 		th->cursor->operators[op] = vm->loadSubroutine(sr);
 		std::cerr << "Loaded rufunge operator " << op << " to be "
 			<< module << "::" << file << std::endl;

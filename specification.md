@@ -94,6 +94,11 @@ For example, to pass "hello" as a parameter would be:
 |   R    | rtn  | Return to caller                       |
 |   L    | lock | Hide the stack before a certain cell - use to stop bugs overwriting previous program's stack elements. |
 
+Calling P will load the subprogram's canvas into memory. Any changes to the Canvas
+in one subprogram call will be kept and seen by the next.
+
+See submodule_getput.rf which calls sp_getput.rf
+
 ### Examples
 
 ```

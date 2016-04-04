@@ -286,6 +286,29 @@ public:
 	}
 };
 
+class JumpSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		th->move();
+		th->move();
+	}
+};
+
+class BridgeSR : public Subroutine
+{
+public:
+	virtual void run(Thread *th)
+	{
+		do {
+			th->move();
+		} while(th->getChar() != ']');
+
+		th->move();
+	}
+};
+
 class TemplateSR : public Subroutine
 {
 public:
@@ -340,8 +363,10 @@ void VM::assignStandardSR(Thread *th)
 	c->operators['\\'] = 18;
 	c->operators['g'] = 19;
 	c->operators['p'] = 20;
+	c->operators['#'] = 21;
+	c->operators['['] = 22;
 
-	// TODO: # [ ] & ~ M P R L
+	// TODO: & ~ M P R L
 }
 
 void VM::init(Canvas *canvas)
@@ -376,6 +401,8 @@ void VM::init(Canvas *canvas)
 	loadSubroutine(new SwapSR);
 	loadSubroutine(new GetSR);
 	loadSubroutine(new PutSR);
+	loadSubroutine(new JumpSR);
+	loadSubroutine(new BridgeSR);
 	assignStandardSR(th);
 }
 

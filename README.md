@@ -11,7 +11,7 @@ because that is obviously what befunge needs.
 
 ## Features
 
-* From befunge
+* From Befunge:
     * Program flow, ext
     * Output
     * Arithmetic, Stack Manip,
@@ -20,17 +20,15 @@ because that is obviously what befunge needs.
         * Input
         * Jump
         * Wrapping canvas
-* rufunge superset
-    * Foundations are in place, but no mechanism to load subprograms yet
-    * todo:
-        * load rufunge files as symbols to call.
+* Rufunge superset
+    * Load other Rufunge scripts as instructions.
+    * Todo:
         * load C++ files as symbols to call.
-* Standard libraries
-    * todo:
-        * String manip (length, compare)
-        * file system
-        * networking
-        * graphics
+        * Standard library:
+            * String manip (length, compare)
+            * file system
+            * networking
+            * graphics
 
 # Usage
 

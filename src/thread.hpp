@@ -15,11 +15,11 @@ enum ETHREAD_STATE
 class VM;
 class Thread
 {
-public:
 	Cursor *cursor;
 	std::stack<Cursor*> link;
 	std::stack<char> stack;
 	ETHREAD_STATE state = ETS_READY;
+public:
 
 	Thread(Canvas *c);
 	~Thread();
@@ -34,17 +34,40 @@ public:
 		assert(cursor);
 		cursor->move();
 	}
+
 	inline void turnLeft() {
 		assert(cursor);
 		cursor->turnLeft();
 	}
+
 	inline void turnRight() {
 		assert(cursor);
 		cursor->turnRight();
 	}
+
 	inline char getChar() {
 		assert(cursor);
 		return cursor->getChar();
+	}
+
+	inline void setCanvasCell(int x, int y, char value) {
+		cursor->canvas->set(x, y, value);
+	}
+
+	inline char getCanvasCell(int x, int y) {
+		return cursor->canvas->get(x, y);
+	}
+
+	inline void setOperator(char c, int id) {
+		cursor->operators[c] = id;
+	}
+
+	inline ETHREAD_STATE getState() const {
+		return state;
+	}
+
+	inline void setState(ETHREAD_STATE v) {
+		state = v;
 	}
 
 	/// Exits the current cursor and loads the next from the stack

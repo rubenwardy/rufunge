@@ -27,7 +27,7 @@ inline int hashCPos(int cx, int cy)
 class Canvas
 {
 public:
-	Chunk* hashmap[CANVAS_HASHMAP_SIZE] = {NULL};
+	Chunk *hashmap[CANVAS_HASHMAP_SIZE] = {NULL};
 
 	Canvas() {}
 

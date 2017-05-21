@@ -41,7 +41,7 @@ public:
 		char ch = th->getChar();
 		int num = ch - '0';
 		if (num < 0 || num > 9) {
-			th->state = ETS_DEAD;
+			th->setState(ETS_DEAD);
 			std::cerr << "ERROR: Character is not a number." << std::endl;
 			return;
 		}
@@ -131,7 +131,7 @@ class EndSR : public Subroutine
 public:
 	virtual void run(VM *vm, Thread *th)
 	{
-		th->state = ETS_DEAD;
+		th->setState(ETS_DEAD);
 		std::cerr << std::endl << "*** Program Exited ***" << std::endl;
 	}
 };
@@ -264,8 +264,7 @@ public:
 	{
 		char y = th->pop();
 		char x = th->pop();
-		Canvas *c = th->cursor->canvas;
-		char v = c->get(x, y);
+		char v = th->getCanvasCell(x, y);
 		th->push(v);
 
 		std::cerr << "Got " << v << " from " << (int)x << ", " << (int)y << std::endl;
@@ -282,8 +281,7 @@ public:
 		char y = th->pop();
 		char x = th->pop();
 		char v = th->pop();
-		Canvas *c = th->cursor->canvas;
-		c->set(x, y, v);
+		th->setCanvasCell(x, y, v);
 		std::cerr << "Put " << v << " to " << (int)x << ", " << (int)y << std::endl;
 
 		th->move();
@@ -382,7 +380,7 @@ public:
 		} else {
 			std::cerr << "Error! Unable to load SR "
 				<< module << "::" << file << std::endl;
-			th->state = ETS_DEAD;
+			th->setState(ETS_DEAD);
 			return;
 		}
 
@@ -391,7 +389,7 @@ public:
 		sr->module = module;
 		sr->file = file;
 		sr->canvas = d;
-		th->cursor->operators[op] = vm->loadSubroutine(sr);
+		th->setOperator(op, vm->loadSubroutine(sr));
 		std::cerr << "Loaded rufunge operator " << op << " to be "
 			<< module << "::" << file << std::endl;
 
@@ -427,7 +425,7 @@ int VM::numAliveThreads()
 {
 	int c = 0;
 	for (Thread *th : threads) {
-		if (th->state > ETS_DEAD)
+		if (th->getState() > ETS_DEAD)
 			c++;
 	}
 	return c;
@@ -442,36 +440,36 @@ int VM::loadSubroutine(Subroutine *sr)
 
 void VM::assignStandardSR(Thread *th)
 {
-	assert(th->cursor);
-	Cursor *c = th->cursor;
-	c->operators['>'] = 1;
-	c->operators['v'] = 1;
-	c->operators['<'] = 1;
-	c->operators['^'] = 1;
+	th->setOperator('>', 1);
+	th->setOperator('v', 1);
+	th->setOperator('<', 1);
+	th->setOperator('^', 1);
+
 	for (int i = 0; i < 10; i++)
-		c->operators[i + '0'] = 2;
-	c->operators[','] = 3;
-	c->operators['.'] = 4;
-	c->operators['+'] = 5;
-	c->operators['-'] = 6;
-	c->operators['*'] = 7;
-	c->operators['/'] = 8;
-	c->operators['@'] = 9;
-	c->operators['_'] = 10;
-	c->operators['|'] = 11;
-	c->operators[':'] = 12;
-	c->operators['%'] = 13;
-	c->operators['!'] = 14;
-	c->operators['`'] = 15;
-	c->operators['?'] = 16;
-	c->operators['$'] = 17;
-	c->operators['\\'] = 18;
-	c->operators['g'] = 19;
-	c->operators['p'] = 20;
-	c->operators['#'] = 21;
-	c->operators['['] = 22;
-	c->operators['R'] = 23;
-	c->operators['P'] = 24;
+		th->setOperator(i + '0', 2);
+
+	th->setOperator(',', 3);
+	th->setOperator('.', 4);
+	th->setOperator('+', 5);
+	th->setOperator('-', 6);
+	th->setOperator('*', 7);
+	th->setOperator('/', 8);
+	th->setOperator('@', 9);
+	th->setOperator('_', 10);
+	th->setOperator('|', 11);
+	th->setOperator(':', 12);
+	th->setOperator('%', 13);
+	th->setOperator('!', 14);
+	th->setOperator('`', 15);
+	th->setOperator('?', 16);
+	th->setOperator('$', 17);
+	th->setOperator('\\', 18);
+	th->setOperator('g', 19);
+	th->setOperator('p', 20);
+	th->setOperator('#', 21);
+	th->setOperator('[', 22);
+	th->setOperator('R', 23);
+	th->setOperator('P', 24);
 
 	// TODO: & ~ M L
 }

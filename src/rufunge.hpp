@@ -13,9 +13,8 @@ public:
 	int numAliveThreads();
 	int loadSubroutine(Subroutine *sr);
 
-	void assignStandardSR(Thread *th);
-
 	void init(Canvas *canvas);
+	void initThread(Thread *thread);
 
 	void step();
 };

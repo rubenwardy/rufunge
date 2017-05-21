@@ -16,7 +16,7 @@ public:
 	Chunk *next;
 };
 
-#define CANVAS_HASHMAP_SIZE 1000
+#define CANVAS_HASHMAP_SIZE 10
 
 inline int hashCPos(int cx, int cy)
 {

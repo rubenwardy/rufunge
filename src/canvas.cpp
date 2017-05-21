@@ -10,7 +10,7 @@ Chunk *Canvas::getChunk(int x, int y)
 	int cx = floor((float)x / CHUNK_SIZE);
 	int cy = floor((float)y / CHUNK_SIZE);
 	int hash = hashCPos(cx, cy);
-	assert(hash >= 0 && hash < 1000);
+	assert(hash >= 0 && hash < CANVAS_HASHMAP_SIZE);
 
 	Chunk *c = hashmap[hash];
 	while (c && (c->x != cx || c->y != cy))
@@ -23,7 +23,7 @@ Chunk *Canvas::getChunkOrCreate(int x, int y)
 	int cx = floor((float)x / CHUNK_SIZE);
 	int cy = floor((float)y / CHUNK_SIZE);
 	int hash = hashCPos(cx, cy);
-	assert(hash >= 0 && hash < 1000);
+	assert(hash >= 0 && hash < CANVAS_HASHMAP_SIZE);
 
 	Chunk *c = hashmap[hash];
 	while (c && (c->x != cx || c->y != cy))

@@ -3,6 +3,7 @@
 #include "subroutine.hpp"
 #include <iostream>
 #include <assert.h>
+#include <memory>
 
 enum ETHREAD_STATE
 {
@@ -21,7 +22,7 @@ class Thread
 	ETHREAD_STATE state = ETS_READY;
 public:
 
-	Thread(Canvas *c);
+	Thread(std::shared_ptr<Canvas> c);
 	~Thread();
 
 	inline void setDir(EDIR dir)

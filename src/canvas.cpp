@@ -5,6 +5,16 @@
 #include <string>
 #include <fstream>
 
+Canvas::Canvas()
+{
+	std::cerr << "### CREATED CANVAS ###" << std::endl;
+}
+
+Canvas::~Canvas()
+{
+	std::cerr << "### DESTROYED CANVAS ###" << std::endl;
+}
+
 Chunk *Canvas::getChunk(int x, int y)
 {
 	int cx = floor((float)x / CHUNK_SIZE);

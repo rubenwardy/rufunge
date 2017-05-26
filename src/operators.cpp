@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <memory>
 
 
 class DirSR : public Subroutine
@@ -325,15 +326,13 @@ public:
 class StartRufungeSR : public Subroutine
 {
 public:
-	Canvas *canvas = new Canvas();
+	std::shared_ptr<Canvas> canvas = std::make_shared<Canvas>();
 	std::string module;
 	std::string file;
 
 	~StartRufungeSR()
 	{
 		std::cerr << "Deconstructing StartRufungeSR" << std::endl;
-		delete canvas;
-		canvas = NULL;
 	}
 
 	virtual void run(VM *vm, Thread *th)
@@ -375,7 +374,7 @@ public:
 		}
 
 		// Load canvas
-		Canvas *d = new Canvas();
+		std::shared_ptr<Canvas> d = std::make_shared<Canvas>();
 		std::string filepath = std::string("examples/") + file + ".rf";
 		if (d->readFromFile(filepath.c_str())) {
 			std::cerr << "Loaded " << filepath << std::endl;

@@ -1,5 +1,6 @@
 #pragma once
 #include "thread.hpp"
+#include <memory>
 
 class VM
 {
@@ -13,7 +14,7 @@ public:
 	int numAliveThreads();
 	int loadSubroutine(Subroutine *sr);
 
-	void init(Canvas *canvas);
+	void init(std::shared_ptr<Canvas> canvas);
 	void initThread(Thread *thread);
 
 	void step();

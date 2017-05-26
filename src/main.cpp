@@ -1,6 +1,7 @@
 #include <iostream>
 #include <assert.h>
 #include "rufunge.hpp"
+#include <memory>
 
 #define TEST(cond) if (!(cond)) { std::cerr << "Failed test, line " << __LINE__ << ": " << #cond << std::endl; return false; }
 inline bool TEST_POS_SET(Canvas &c, int x, int y, char b, char a)
@@ -12,7 +13,7 @@ inline bool TEST_POS_SET(Canvas &c, int x, int y, char b, char a)
 	return true;
 }
 
-#define TEST_POS(ca, x, y, ch) TEST((ca).get((x), (y)) == (ch))
+#define TEST_POS(ca, x, y, ch) TEST((ca)->get((x), (y)) == (ch))
 
 bool run_tests()
 {
@@ -36,8 +37,9 @@ bool run_tests()
 	TEST(dirLeft(DOWN)   == RIGHT);
 	TEST(dirLeft(LEFT)   == DOWN);
 
-	Canvas d;
-	TEST(d.readFromFile("examples/hello_world.rf"));
+
+	std::shared_ptr<Canvas> d = std::make_shared<Canvas>();
+	TEST(d->readFromFile("examples/hello_world.rf"));
 
 	std::string line = ">              v";
 	int y = 0;
@@ -80,12 +82,12 @@ int main(int n, char **args)
 	std::cerr << "Running " << args[1] << std::endl;
 	const char *filepath = args[1];
 
-	Canvas d;
-	if (!d.readFromFile(filepath))
+	std::shared_ptr<Canvas> d = std::make_shared<Canvas>();
+	if (!d->readFromFile(filepath))
 		return 1;
 
 	VM vm;
-	vm.init(&d);
+	vm.init(d);
 
 	while (vm.numAliveThreads() > 0)
 		vm.step();

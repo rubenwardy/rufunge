@@ -1,6 +1,6 @@
 #include "thread.hpp"
 
-Thread::Thread(Canvas *c)
+Thread::Thread(std::shared_ptr<Canvas> c)
 {
 	std::cerr << "Created new thread!" << std::endl;
 	cursor = new Cursor();

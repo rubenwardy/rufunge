@@ -33,7 +33,7 @@ int VM::loadSubroutine(Subroutine *sr)
 	return sr_count;
 }
 
-void VM::init(Canvas *canvas)
+void VM::init(std::shared_ptr<Canvas> canvas)
 {
 	srand (time(NULL));
 

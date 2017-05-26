@@ -1,5 +1,6 @@
 #pragma once
 #include "canvas.hpp"
+#include <memory>
 
 enum EDIR {
 	RIGHT,
@@ -25,7 +26,7 @@ inline EDIR dirLeft(EDIR dir)
 class Cursor
 {
 public:
-	Canvas *canvas = NULL;
+	std::shared_ptr<Canvas> canvas = NULL;
 	int x = 0;
 	int y = 0;
 	EDIR dir = RIGHT;

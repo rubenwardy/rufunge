@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <cstddef>
+#include <iostream>
 
 #define CHUNK_SIZE 16
 
@@ -29,7 +30,8 @@ class Canvas
 public:
 	Chunk *hashmap[CANVAS_HASHMAP_SIZE] = {NULL};
 
-	Canvas() {}
+	Canvas();
+	~Canvas();
 
 	Chunk *getChunk(int x, int y);
 	Chunk *getChunkOrCreate(int x, int y);

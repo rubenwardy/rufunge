@@ -23,6 +23,7 @@ class Thread
 public:
 
 	Thread(std::shared_ptr<Canvas> c);
+	Thread(const Thread &other);
 	~Thread();
 
 	inline void setDir(EDIR dir)

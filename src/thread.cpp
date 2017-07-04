@@ -7,6 +7,23 @@ Thread::Thread(std::shared_ptr<Canvas> c)
 	cursor->canvas = c;
 }
 
+Thread::Thread(const Thread &other)
+{
+	cursor = new Cursor(*other.cursor);
+
+	std::stack<Cursor*> in = other.link;
+	std::stack<Cursor*> tmp;
+	while (!in.empty()) {
+		tmp.push(in.top());
+		in.pop();
+	}
+
+	while (!tmp.empty()) {
+		link.push(new Cursor(*tmp.top()));
+		tmp.pop();
+	}
+}
+
 Thread::~Thread()
 {
 	std::cerr << "Deconstructing thread!" << std::endl;

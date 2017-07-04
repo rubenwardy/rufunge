@@ -398,6 +398,18 @@ public:
 	}
 };
 
+class ThreadForkSR : public Subroutine
+{
+public:
+	virtual void run(VM *vm, Thread *th)
+	{
+		Thread *th2 = new Thread(*th);
+		vm->addThread(th2);
+		th->move();
+	}
+};
+
+
 
 class TemplateSR : public Subroutine
 {

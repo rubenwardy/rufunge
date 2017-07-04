@@ -31,6 +31,7 @@ public:
 	Chunk *hashmap[CANVAS_HASHMAP_SIZE] = {NULL};
 
 	Canvas();
+	Canvas(const Canvas &other) = delete;
 	~Canvas();
 
 	Chunk *getChunk(int x, int y);

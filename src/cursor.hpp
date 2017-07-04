@@ -26,11 +26,23 @@ inline EDIR dirLeft(EDIR dir)
 class Cursor
 {
 public:
-	std::shared_ptr<Canvas> canvas = NULL;
+	std::shared_ptr<Canvas> canvas;
 	int x = 0;
 	int y = 0;
 	EDIR dir = RIGHT;
 	std::map<char, int> operators;
+
+	Cursor(std::shared_ptr<Canvas> canvas):
+	 	canvas(canvas)
+	{}
+
+	Cursor(const Cursor &other) {
+		canvas = other.canvas;
+		x = other.x;
+		y = other.y;
+		dir = other.dir;
+		operators = other.operators;
+	}
 
 	inline void move()
 	{

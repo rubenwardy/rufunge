@@ -16,6 +16,7 @@ public:
 
 	void init(std::shared_ptr<Canvas> canvas);
 	void initThread(Thread *thread);
+	void addThread(Thread *thread);
 
 	void step();
 };

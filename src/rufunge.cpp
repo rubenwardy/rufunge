@@ -43,7 +43,6 @@ void VM::init(std::shared_ptr<Canvas> canvas)
 	// Create thread
 	Thread *th = new Thread(canvas);
 	initThread(th);
-	threads.push_back(th);
 
 	// Create subroutines
 	loadSubroutines(this);
@@ -52,6 +51,12 @@ void VM::init(std::shared_ptr<Canvas> canvas)
 void VM::initThread(Thread *th)
 {
 	assignStandardSR(th);
+	addThread(th);
+}
+
+void VM::addThread(Thread *th)
+{
+	threads.push_back(th);
 }
 
 void VM::step()

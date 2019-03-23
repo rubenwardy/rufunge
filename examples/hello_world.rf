@@ -1,5 +1,4 @@
->              v
-v  ,,,,,"Hello"<
->48*,          v
-v,,,,,,"World!"<
->25*,@
+> 0 2 5 *        v add a 0 and a 10 to the stack
+v "Hello World!" < add "!dlroW olleH" to the stack
+> : v              dup cuz' if will pop next element
+^ , _            @ if next is 0 exit else output char

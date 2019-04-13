@@ -41,24 +41,24 @@ bool run_tests()
 	std::shared_ptr<Canvas> d = std::make_shared<Canvas>();
 	TEST(d->readFromFile("examples/hello_world.rf"));
 
-	std::string line = ">              v";
+	std::string line = "> 0 2 5 *        v add a 0 and a 10 to the stack";
 	int y = 0;
 	for (int x = 0; x < line.size(); x++)
 		TEST_POS(d, x, y, line[x]);
 
-	line = "v  ,,,,,\"Hello\"<"; y++;
+	line = "v \"Hello World!\" < add \"!dlroW olleH\" to the stack"; y++;
 	for (int x = 0; x < line.size(); x++)
 		TEST_POS(d, x, y, line[x]);
 
-	line = ">48*,          v"; y++;
+	line = "> : v              dup cuz' if will pop next element"; y++;
 	for (int x = 0; x < line.size(); x++)
 		TEST_POS(d, x, y, line[x]);
 
-	line = "v,,,,,,\"World!\"<"; y++;
+	line = "^ , _            @ if next is 0 exit else output char"; y++;
 	for (int x = 0; x < line.size(); x++)
 		TEST_POS(d, x, y, line[x]);
 
-	line = ">25*,@            "; y++;
+	line = ""; y++;
 	for (int x = 0; x < line.size(); x++)
 		TEST_POS(d, x, y, line[x]);
 

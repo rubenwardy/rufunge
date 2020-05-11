@@ -1,0 +1,6 @@
+> 0 2 5 *                       v
+v "Please enter two integers: " <
+> : v v "sum: " <
+^ , _   & & + 0 ^
+      > : v
+      ^ , _ $ . 2 5 * , @

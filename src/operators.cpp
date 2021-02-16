@@ -398,6 +398,29 @@ public:
 	}
 };
 
+class ReadCharSR : public Subroutine
+{
+public:
+	virtual void run(VM *vm, Thread *th)
+	{
+		char ch;
+		std::cin >> std::noskipws >> ch;
+		th->push(ch);
+		th->move();
+	}
+};
+
+class ReadNumSR : public Subroutine
+{
+public:
+	virtual void run(VM *vm, Thread *th)
+	{
+		int i;
+		std::cin >> i;
+		th->push(i);
+		th->move();
+	}
+};
 
 class TemplateSR : public Subroutine
 {
@@ -440,6 +463,8 @@ void assignStandardSR(Thread *th)
 	th->setOperator('[', 22);
 	th->setOperator('R', 23);
 	th->setOperator('P', 24);
+	th->setOperator('~', 25);
+	th->setOperator('&', 26);
 
 	// TODO: & ~ M L
 }
@@ -469,4 +494,6 @@ void loadSubroutines(VM *vm) {
 	vm->loadSubroutine(new BridgeSR);
 	vm->loadSubroutine(new RtnSR);
 	vm->loadSubroutine(new LoadSR);
+	vm->loadSubroutine(new ReadCharSR);
+	vm->loadSubroutine(new ReadNumSR);
 }

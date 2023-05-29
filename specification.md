@@ -11,8 +11,8 @@ An element in the stack is an unsigned number, 32 bit or larger.
 When the cursor reaches a number, it pushes that digit onto the stack.  
 For example, 123 will end up with a stack of `[3, 2, 1]`. (left most is top most)
 
-The \` can be used to enter into numeric mode.
-For example, \`123\` would give you a stack `[123]`.
+The `'` can be used to enter into numeric mode.
+For example, `'123'` would give you a stack `[123]`.
 
 ## 1.3 Strings
 
@@ -40,7 +40,7 @@ For example, "hello" ends up with
 | Symbol | Name | Description                   |
 | ------ | ---- |------------------------------ |
 |   !    | Not  | If a == 0, push 1 else push 0 |
-|   `    | Grtr | If b > a,  push 1 else push 0 |
+|  \`    | Grtr | If b > a,  push 1 else push 0 |
 
 ## 2.3 Flow Control
 
@@ -56,7 +56,7 @@ For example, "hello" ends up with
 |   #    | brdg | Jump over next statement      |
 |   @    | exit | Exit Program                  |
 |   [    |  bs  | Skip til next                 |
-|	]    |  be  | End skip                      |
+|   ]    |  be  | End skip                      |
 
 ## 2.4 Stack Operators
 

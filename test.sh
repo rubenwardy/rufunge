@@ -5,7 +5,7 @@ mkdir /tmp/rufunge
 mkdir /tmp/rufunge/examples
 
 for name in examples/*.rf; do
-	./bin/a $name > /tmp/rufunge/$name.txt
+	./bin/a $name > /tmp/rufunge/$name.txt 2> ./log.txt
 
 	echo Result for $name:
 	cat /tmp/rufunge/$name.txt

@@ -75,7 +75,8 @@ void Thread::step(VM *vm, std::map<int, Subroutine*> &srman)
 			std::cerr << "Enter string mode!" << std::endl;
 			state = ETS_STRING;
 			move();
-		} else if (ch == '`') {
+		} else if (ch == '\'') {
+			//TODO: implement numeric state
 			std::cerr << "Enter numeric mode!" << std::endl;
 			state = ETS_NUMBER;
 			move();
